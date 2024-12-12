@@ -1,44 +1,54 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
 
-void getRandomArray(vector<int>& v, int n) {
-	int MIN = 10;
-	int MAX = 99;
-	srand(time(NULL));
-	for (int i = 0; i < n; ++i) {
-		v[i] = MIN + rand() % (MAX - MIN + 1);
+void getRandomArray(std::vector<int>& vector, int length) {
+	int randomNumber = 0;
+	int min = 10;
+	int max = 99;
+	for (int i = 0; i < length; ++i) {
+		randomNumber = min + std::rand() % (max - min + 1);
+		vector.emplace_back(randomNumber);
 	}
 }
 
-int linearSearch(vector<int> v, int key) {
-	for (int i = 0; i < v.size(); ++i) {
-		if (v[i] == key) {
+void printArray(const std::vector<int>& vector) {
+	int length = vector.size();
+	for (int i = 0; i < length; ++i) {
+		std::cout << vector.at(i) << ' ';
+	}
+	std::cout << '\n';
+}
+
+int linearSearch(const std::vector<int>& vector, int key) {
+	int length = vector.size();
+	for (int i = 0; i < length; ++i) {
+		if (vector.at(i) == key) {
 			return i;
 		}
 	}
 	return -1;
 }
 
-void printArray(vector<int> v) {
-	for (int i = 0; i < v.size(); ++i) {
-		cout << v[i] << ' ';
+int main(void) {
+	int length, key;
+	std::cout << "Enter the length of the array: ";
+	std::cin >> length;
+	if (length <= 0) {
+		return -1;
 	}
-	cout << '\n';
-}
-
-int main(int argc, char const* agrv[]) {
-	ios_base::sync_with_stdio(false);
-	cin.tie(nullptr);
-	cout.tie(nullptr);
-	int n;
-	cin >> n;
-
-	vector<int> v(n);
-	getRandomArray(v, n);
-
-	printArray(v);
-
-	cout << "The position of element is: " << linearSearch(v, 57) << '\n';
-
+	std::vector<int> vector;
+	srand(time(nullptr));
+	getRandomArray(vector, length);
+	std::cout << "Your array is: ";
+	printArray(vector);
+	std::cout << "Enter your key: ";
+	std::cin >> key;
+	if (linearSearch(vector, key) == -1) {
+		std::cout << "Not found!\n";
+	} else {
+		std::cout << "The position is: " << linearSearch(vector, key) << '\n';
+	}
 	return 0;
 }
