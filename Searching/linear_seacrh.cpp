@@ -45,10 +45,11 @@ int main(void) {
 	printArray(vector);
 	std::cout << "Enter your key: ";
 	std::cin >> key;
-	if (linearSearch(vector, key) == -1) {
+	int position = linearSearch(vector, key);
+	if (position == -1) {
 		std::cout << "Not found!\n";
 	} else {
-		std::cout << "The position is: " << linearSearch(vector, key) << '\n';
+		std::cout << "The position is: " << position << '\n';
 	}
 	return 0;
 }
