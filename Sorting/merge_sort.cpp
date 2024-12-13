@@ -3,16 +3,6 @@
 #include <cstdlib>
 #include <ctime>
 
-bool isUp(const std::vector<int>& vector) {
-	int length = vector.size();
-	for (int i = 0; i < length - 1; ++i) {
-		if (vector.at(i) > vector.at(i + 1)) {
-			return false;
-		}
-	}
-	return true;
-}
-
 void getRandomArray(std::vector<int>& vector, int length) {
 	int randomNumber = 0;
 	int min = 100;
@@ -83,6 +73,5 @@ int main(void) {
 	mergeSort(vector, 0, length - 1);
 	std::cout << "Your sorted array: ";
 	printArray(vector);
-	std::cout << (isUp(vector) ? "YES" : "NO") << '\n';
 	return 0;
 }
