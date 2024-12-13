@@ -1,120 +1,72 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
 
-bool is_up(vector<int> arr) {
-	for (int i = 0; i < arr.size() - 1; ++i) {
-		if (arr[i] > arr[i + 1]) {
-			return false;
-		}
-	}
-	return true;
-}
-
-void get_random_array(vector<int>& arr, int n) {
-	int min = 10;
-	int max = 99;
-	srand(time(nullptr));
-	for (int i = 0; i < n; ++i) {
-		arr[i] = min + rand() % (max - min + 1);
+void getRandomArray(std::vector<int>& vector, int length) {
+	int randomNumber = 0;
+	int min = 100;
+	int max = 2000;
+	for (int i = 0; i < length; ++i) {
+		randomNumber = min + std::rand() % (max - min + 1);
+		vector.emplace_back(randomNumber);
 	}
 }
 
-void print_array(vector<int> arr) {
-	for (int i = 0; i < arr.size(); ++i) {
-		cout << arr[i] << ' ';
+void printArray(const std::vector<int>& vector) {
+	int length = vector.size();
+	for (int i = 0; i < length; ++i) {
+		std::cout << vector.at(i) << ' ';
 	}
-	cout << '\n';
+	std::cout << '\n';
 }
 
-int median_of_three(vector<int> arr, int left, int right) {
-	int mid = left + (right - left) / 2;
-	if (arr[left] > arr[mid]) {
-		swap(arr[left], arr[mid]);
+int medianOfThree(std::vector<int> vector, int left, int right) {
+	int middle = left + (right - left) / 2;
+	if (vector.at(left) > vector.at(middle)) {
+		std::swap(vector.at(left), vector.at(middle));
 	}
-	if (arr[left] > arr[right]) {
-		swap(arr[left], arr[right]);
+	if (vector.at(left) > vector.at(right)) {
+		std::swap(vector.at(left), vector.at(right));
 	}
-	if (arr[mid] > arr[right]) {
-		swap(arr[mid], arr[right]);
+	if (vector.at(middle) > vector.at(right)) {
+		std::swap(vector.at(middle), vector.at(right));
 	}
-	return arr[mid];
+	return vector.at(middle);
 }
 
-// Thuật toán sắp xếp phân hoạch sử dụng phép phân hoạch Lomuto (Lomuto Partition)
-int partition(vector<int>& arr, int left, int right) {
-	int pivot = arr[right];
-	int i = left - 1;
-	for (int j = left; j < right; ++j) {
-		if (arr[j] < pivot) {
+void quickSort(std::vector<int>& vector, int left, int right) {
+	int pivot = medianOfThree(vector, left, right);
+	int i = left;
+	int j = right;
+	do {
+		while (vector.at(i) < pivot) { ++i; }
+		while (vector.at(j) > pivot) { --j; }
+		if (i <= j) {
+			std::swap(vector.at(i), vector.at(j));
 			++i;
-			swap(arr[i], arr[j]);
+			--j;
 		}
-	}
-	swap(arr[i + 1], arr[right]);
-	return i + 1;
+	} while (i <= j);
+	if (left < j) { quickSort(vector, left, j); }
+	if (i < right) { quickSort(vector, i, right); }
 }
 
-void quick_sort(vector<int>& arr, int left, int right) {
-	if (left < right) {
-		int piv = partition(arr, left, right);
-		quick_sort(arr, left, piv - 1);
-		quick_sort(arr, piv + 1, right);
+int main(void) {
+	int length, key;
+	std::cout << "Enter the length of the array: ";
+	std::cin >> length;
+	if (length <= 0) {
+		std::cerr << "An error has occurred!\n";
+		return 1;
 	}
-}
-
-// Thuật toán sắp xếp phân hoạch sử dụng phép phân hoạch Hoare (Hoare Partition)
-// int partition(vector<int>& arr, int left, int right) {
-// 	int pivot = median_of_three(arr, left, right);
-// 	int i = left;
-// 	int j = right;
-// 	do {
-// 		while (arr[i] < pivot) ++i;
-// 		while (arr[j] > pivot) --j;
-// 		if (i >= j) {
-// 			return j;
-// 		}
-// 		swap(arr[i], arr[j]);
-// 		++i;
-// 		--j;
-// 	} while (true);
-// }
-
-// void quick_sort(vector<int>& arr, int left, int right) {
-// 	if (left < right) {
-// 		int piv = partition(arr, left, right);
-// 		quick_sort(arr, left, piv);
-// 		quick_sort(arr, piv + 1, right);
-// 	}
-// }
-
-// Thuật toán sắp xếp phân hoạch
-// void quick_sort(vector<int>& arr, int left, int right) {
-// 	int pivot = median_of_three(arr, left, right);
-// 	int i = left;
-// 	int j = right;
-// 	do {
-// 		while (arr[i] < pivot) ++i;
-// 		while (arr[j] > pivot) --j;
-// 		if (i <= j) {
-// 			swap(arr[i], arr[j]);
-// 			++i;
-// 			--j;
-// 		}
-// 	} while (i <= j);
-// 	if (left < j) quick_sort(arr, left, j);
-// 	if (i < right) quick_sort(arr, i, right);
-// }
-
-int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	int n;
-	cin >> n;
-	vector<int> arr(n);
-	get_random_array(arr, n);
-	print_array(arr);
-	quick_sort(arr, 0, arr.size() - 1);
-	print_array(arr);
-	is_up(arr) ? cout << "passed!\n" : cout << "failed!\n";
+	std::vector<int> vector;
+	srand(time(nullptr));
+	getRandomArray(vector, length);
+	std::cout << "Your array is: ";
+	printArray(vector);
+	quickSort(vector, 0, length - 1);
+	std::cout << "Your sorted array: ";
+	printArray(vector);
 	return 0;
 }
