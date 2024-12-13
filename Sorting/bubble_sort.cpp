@@ -1,55 +1,56 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
 
-bool is_up(vector<int> arr) {
-	for (int i = 0; i < arr.size() - 1; ++i) {
-		if (arr[i] > arr[i + 1]) {
-			return false;
-		}
-	}
-	return true;
-}
-
-void get_random_array(vector<int>& arr, int n) {
-	int min = 10;
-	int max = 99;
-	srand(time(nullptr));
-	for (int i = 0; i < n; ++i) {
-		arr[i] = min + rand() % (max - min + 1);
+void getRandomArray(std::vector<int>& vector, int length) {
+	int randomNumber = 0;
+	int min = 100;
+	int max = 2000;
+	for (int i = 0; i < length; ++i) {
+		randomNumber = min + std::rand() % (max - min + 1);
+		vector.emplace_back(randomNumber);
 	}
 }
 
-void print_array(vector<int> arr) {
-	for (int i = 0; i < arr.size(); ++i) {
-		cout << arr[i] << ' ';
+void printArray(const std::vector<int>& vector) {
+	int length = vector.size();
+	for (int i = 0; i < length; ++i) {
+		std::cout << vector.at(i) << ' ';
 	}
-	cout << '\n';
+	std::cout << '\n';
 }
 
-void bubble_sort(vector<int>& arr) {
-	int is_swapped = 1, length = arr.size();
+void bubbleSort(std::vector<int>& vector) {
+	int length = vector.size();
+	bool isSwapped = true;
 	do {
-		is_swapped = 0;
+		isSwapped = false;
 		for (int i = 0; i < length - 1; ++i) {
-			if (arr[i] > arr[i + 1]) {
-				swap(arr[i], arr[i + 1]);
-				is_swapped = 1;
+			if (vector.at(i) > vector.at(i + 1)) {
+				std::swap(vector.at(i), vector.at(i + 1));
+				isSwapped = true;
 			}
 		}
 		--length;
-	} while (is_swapped);
+	} while (isSwapped);
 }
 
-int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	int n;
-	cin >> n;
-	vector<int> arr(n);
-	get_random_array(arr, n);
-	print_array(arr);
-	bubble_sort(arr);
-	print_array(arr);
-	is_up(arr) ? cout << "passed!\n" : cout << "failed!\n";
+int main(void) {
+	int length, key;
+	std::cout << "Enter the length of the array: ";
+	std::cin >> length;
+	if (length <= 0) {
+		std::cerr << "An error has occurred!\n";
+		return 1;
+	}
+	std::vector<int> vector;
+	srand(time(nullptr));
+	getRandomArray(vector, length);
+	std::cout << "Your array is: ";
+	printArray(vector);
+	bubbleSort(vector);
+	std::cout << "Your sorted array: ";
+	printArray(vector);
 	return 0;
 }
