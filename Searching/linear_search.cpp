@@ -36,6 +36,7 @@ int main(void) {
 	std::cout << "Enter the length of the array: ";
 	std::cin >> length;
 	if (length <= 0) {
+		std::cerr << "An error has occurred!\n";
 		return -1;
 	}
 	std::vector<int> vector;
