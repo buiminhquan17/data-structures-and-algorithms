@@ -1,54 +1,55 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
 
-bool is_up(vector<int> arr) {
-	for (int i = 0; i < arr.size() - 1; ++i) {
-		if (arr[i] > arr[i + 1]) {
-			return false;
-		}
-	}
-	return true;
-}
-
-void get_random_array(vector<int>& arr, int n) {
-	int min = 10;
-	int max = 99;
-	srand(time(nullptr));
-	for (int i = 0; i < n; ++i) {
-		arr[i] = min + rand() % (max - min + 1);
+void getRandomArray(std::vector<int>& vector, int length) {
+	int randomNumber = 0;
+	int min = 100;
+	int max = 2000;
+	for (int i = 0; i < length; ++i) {
+		randomNumber = min + std::rand() % (max - min + 1);
+		vector.emplace_back(randomNumber);
 	}
 }
 
-void print_array(vector<int> arr) {
-	for (int i = 0; i < arr.size(); ++i) {
-		cout << arr[i] << ' ';
+void printArray(const std::vector<int>& vector) {
+	int length = vector.size();
+	for (int i = 0; i < length; ++i) {
+		std::cout << vector.at(i) << ' ';
 	}
-	cout << '\n';
+	std::cout << '\n';
 }
 
-void selection_sort(vector<int>& arr) {
-	int min_index = 0;
-	for (int i = 0; i < arr.size() - 1; ++i) {
-		min_index = i;
-		for (int j = i + 1; j < arr.size(); ++j) {
-			if (arr[j] < arr[min_index]) {
-				min_index = j;
+void selectionSort(std::vector<int>& vector) {
+	int length = vector.size();
+	int minIndex = 0;
+	for (int i = 0; i < length - 1; ++i) {
+		minIndex = i;
+		for (int j = i + 1; j < length; ++j) {
+			if (vector.at(minIndex) > vector.at(j)) {
+				minIndex = j;
 			}
 		}
-		swap(arr[i], arr[min_index]);
-	}
+		std::swap(vector.at(minIndex), vector.at(i));
+	} 
 }
 
-int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	int n;
-	cin >> n;
-	vector<int> arr(n);
-	get_random_array(arr, n);
-	print_array(arr);
-	selection_sort(arr);
-	print_array(arr);
-	is_up(arr) ? cout << "passed!\n" : cout << "failed!\n";
+int main(void) {
+	int length, key;
+	std::cout << "Enter the length of the array: ";
+	std::cin >> length;
+	if (length <= 0) {
+		std::cerr << "An error has occurred!\n";
+		return 1;
+	}
+	std::vector<int> vector;
+	srand(time(nullptr));
+	getRandomArray(vector, length);
+	std::cout << "Your array is: ";
+	printArray(vector);
+	selectionSort(vector);
+	std::cout << "Your sorted array: ";
+	printArray(vector);
 	return 0;
 }
