@@ -1,76 +1,88 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
 
-bool is_up(vector<int> arr) {
-	for (int i = 0; i < arr.size() - 1; ++i) {
-		if (arr[i] > arr[i + 1]) {
+bool isUp(const std::vector<int>& vector) {
+	int length = vector.size();
+	for (int i = 0; i < length - 1; ++i) {
+		if (vector.at(i) > vector.at(i + 1)) {
 			return false;
 		}
 	}
 	return true;
 }
 
-void get_random_array(vector<int>& arr, int n) {
-	int min = 10;
-	int max = 99;
-	srand(time(nullptr));
-	for (int i = 0; i < n; ++i) {
-		arr[i] = min + rand() % (max - min + 1);
+void getRandomArray(std::vector<int>& vector, int length) {
+	int randomNumber = 0;
+	int min = 100;
+	int max = 2000;
+	for (int i = 0; i < length; ++i) {
+		randomNumber = min + std::rand() % (max - min + 1);
+		vector.emplace_back(randomNumber);
 	}
 }
 
-void print_array(vector<int> arr) {
-	for (int i = 0; i < arr.size(); ++i) {
-		cout << arr[i] << ' ';
+void printArray(const std::vector<int>& vector) {
+	int length = vector.size();
+	for (int i = 0; i < length; ++i) {
+		std::cout << vector.at(i) << ' ';
 	}
-	cout << '\n';
+	std::cout << '\n';
 }
 
-void merge(vector<int>& arr, int left, int mid, int right) {
-	vector<int> first(mid - left + 1);
-	vector<int> second(right - mid);
-	for (int i = 0; i < first.size(); ++i) {
-		first[i] = arr[left + i];
+void merge(std::vector<int>& vector, int left, int middle, int right) {
+	std::vector<int> first(middle - left + 1);
+	std::vector<int> second(right - middle);
+	int firstLength = first.size();
+	int secondLength = second.size();
+	for (int i = 0; i < firstLength; ++i) {
+		first.at(i) = vector.at(left + i);
 	}
-	for (int j = 0; j < second.size(); ++j) {
-		second[j] = arr[mid + 1 + j];
+	for (int j = 0; j < secondLength; ++j) {
+		second.at(j) = vector.at(middle + 1 + j);
 	}
-	int i = 0;
-	int j = 0;
-	while (i < first.size() && j < second.size()) {
-		if (first[i] <= second[j]) {
-			arr[left++] = first[i++];
+	int i = 0, j = 0;
+	while (i < firstLength && j < secondLength) {
+		if (first.at(i) <= second.at(j)) {
+			vector.at(left++) = first.at(i++);
 		} else {
-			arr[left++] = second[j++];
+			vector.at(left++) = second.at(j++);
 		}
 	}
-	while (i < first.size()) {
-		arr[left++] = first[i++];
+	while (i < firstLength) {
+		vector.at(left++) = first.at(i++);
 	}
-	while (j < second.size()) {
-		arr[left++] = second[j++];
+	while (j < secondLength) {
+		vector.at(left++) = second.at(j++);
 	}
 }
 
-void merge_sort(vector<int>& arr, int left, int right) {
+void mergeSort(std::vector<int>& vector, int left, int right) {
 	if (left < right) {
-		int mid = left + (right - left) / 2;
-		merge_sort(arr, left, mid);
-		merge_sort(arr, mid + 1, right);
-		merge(arr, left, mid, right);
+		int middle = left + (right - left) / 2;
+		mergeSort(vector, left, middle);
+		mergeSort(vector, middle + 1, right);
+		merge(vector, left, middle, right);
 	}
 }
 
-int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	int n;
-	cin >> n;
-	vector<int> arr(n);
-	get_random_array(arr, n);
-	print_array(arr);
-	merge_sort(arr, 0, arr.size() - 1);
-	print_array(arr);
-	is_up(arr) ? cout << "passed!\n" : cout << "failed!\n";
+int main(void) {
+	int length, key;
+	std::cout << "Enter the length of the array: ";
+	std::cin >> length;
+	if (length <= 0) {
+		std::cerr << "An error has occurred!\n";
+		return 1;
+	}
+	std::vector<int> vector;
+	srand(time(nullptr));
+	getRandomArray(vector, length);
+	std::cout << "Your array is: ";
+	printArray(vector);
+	mergeSort(vector, 0, length - 1);
+	std::cout << "Your sorted array: ";
+	printArray(vector);
+	std::cout << (isUp(vector) ? "YES" : "NO") << '\n';
 	return 0;
 }
