@@ -3,10 +3,6 @@
 #include <cstdlib>
 #include <ctime>
 
-void doSomething() {
-	std::cout << "Doing something...\n";
-}
-
 void getRandomArray(std::vector<int>& vector, int length) {
 	int randomNumber = 0;
 	int min = 10;
