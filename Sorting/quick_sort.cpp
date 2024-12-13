@@ -32,11 +32,12 @@ int medianOfThree(std::vector<int> vector, int left, int right) {
 	if (vector.at(middle) > vector.at(right)) {
 		std::swap(vector.at(middle), vector.at(right));
 	}
-	return vector.at(middle);
+	return middle;
 }
 
 void quickSort(std::vector<int>& vector, int left, int right) {
-	int pivot = medianOfThree(vector, left, right);
+	int pivotIndex = medianOfThree(vector, left, right);
+	int pivot = vector.at(pivotIndex);
 	int i = left;
 	int j = right;
 	do {
