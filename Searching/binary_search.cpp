@@ -4,6 +4,10 @@
 #include <ctime>
 #include <algorithm> // For std::sort()
 
+void doSomething() {
+	std::cout << "Doing something...\n";
+}
+
 void getRandomArray(std::vector<int>& vector, int length) {
 	int randomNumber = 0;
 	int min = 10;
