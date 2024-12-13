@@ -37,7 +37,7 @@ int main(void) {
 	std::cin >> length;
 	if (length <= 0) {
 		std::cerr << "An error has occurred!\n";
-		return -1;
+		return 1;
 	}
 	std::vector<int> vector;
 	srand(time(nullptr));
