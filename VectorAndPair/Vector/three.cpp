@@ -14,12 +14,12 @@ int main(void) {
 		std::cin >> element;
 	}
 	std::sort(vector.begin(), vector.end());
-	for (auto it = vector.begin(); it != vector.end(); ++it) {
+	for (std::vector<int>::iterator it = vector.begin(); it != vector.end(); ++it) {
 		std::cout << (*it) << ' ';
 	}
 	std::cout << '\n';
 	std::sort(vector.begin(), vector.end(), std::greater<int>());
-	for (auto it = vector.begin(); it != vector.end(); ++it) {
+	for (std::vector<int>::iterator it = vector.begin(); it != vector.end(); ++it) {
 		std::cout << (*it) << ' ';
 	}
 	return 0;
