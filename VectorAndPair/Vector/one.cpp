@@ -28,10 +28,8 @@
 
 int main(void) {
 	std::vector<int> vector;
-
 	int query, operation, element;
 	std::cin >> query;
-	
 	for (int i = 0; i < query; ++i) {
 		std::cin >> operation;
 		if (operation == 1) {
@@ -43,7 +41,6 @@ int main(void) {
 			}
 		}
 	}
-
 	if (vector.empty()) {
 		std::cout << "EMPTY";
 	} else {
@@ -51,6 +48,5 @@ int main(void) {
 			std::cout << element << ' ';
 		}
 	}
-
 	return 0;
 }
