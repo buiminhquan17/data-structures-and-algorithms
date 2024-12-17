@@ -44,7 +44,7 @@ int main(void) {
 	if (vector.empty()) {
 		std::cout << "EMPTY";
 	} else {
-		for (int element : vector) {
+		for (auto element : vector) {
 			std::cout << element << ' ';
 		}
 	}
