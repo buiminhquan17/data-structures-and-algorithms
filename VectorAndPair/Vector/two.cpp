@@ -41,8 +41,9 @@ int main(void) {
 		if (operation == 1) {
 			int position, element;
 			std::cin >> position >> element;
-			if (position >= 0 && position <= vector.size())
+			if (position >= 0 && position <= vector.size()) {
 				vector.insert(vector.begin() + position, element);
+			}
 		} else {
 			int position;
 			std::cin >> position;
